@@ -1,14 +1,15 @@
 /**
  * Inserts a value between every item in an array.
- * Mutates the original array.
  *
  * @param {Array} arr An array.
  * @param {*} value A value.
- * @returns {Array} The original array.
+ * @returns {Array} The new array.
  */
 let insertBetween = (arr, value) => {
+    arr = arr.slice();
+    
     let l = arr.length;
-    if (l <= 0)
+    if (l <= 1)
       return arr;
     
     while (--l)

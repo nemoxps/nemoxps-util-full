@@ -4,17 +4,21 @@
  *
  * @param {Array} arr An array.
  * @param {...*} values One or more values.
- * @returns {Array} The original array.
+ * @returns {Array} The removed values.
  */
 let pull = (arr, ...values) => {
+    let r = [];
     for (let value of values)
     {
       let idx = 0;
       while ((idx = arr.indexOf(value, idx)) > -1)
+      {
+        r.push(arr[idx]);
         arr.splice(idx, 1);
+      }
     }
     
-    return arr;
+    return r;
 };
 
 

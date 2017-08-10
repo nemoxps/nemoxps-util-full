@@ -1,5 +1,4 @@
-let isObject = require('./isObject');
-let fromEntries = require('./fromEntries');
+let isPlainObject = require('./isPlainObject');
 let mapValues = require('./mapValues');
 
 
@@ -11,10 +10,7 @@ let mapValues = require('./mapValues');
  * @returns {Object} A map object of `obj`.
  */
 let toMapObj = (obj, recursive = false) => {
-    let objProto = Object.prototype;
-    return fromEntries(Object.entries(mapValues(obj, (val) => {
-        return (recursive && isObject(val) && Object.getPrototypeOf(val) === objProto) ? toMapObj(val) : val;
-    })), Object.create(null));
+    return mapValues(obj, (val) => (recursive && isPlainObject(val)) ? toMapObj(val, true) : val, Object.create(null));
 };
 
 

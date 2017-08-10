@@ -6,10 +6,11 @@ let map = require('./map');
  *
  * @param {Object} obj An object.
  * @param {function} iteratee A function that is called for each element.
+ * @param {Object} [acc] An accumulator.
  * @returns {Object} The mapped object.
  */
-let mapKeys = (obj, iteratee) => {
-    return map(obj, (val, key, obj) => [iteratee(val, key, obj), val]);
+let mapKeys = (obj, iteratee, acc) => {
+    return map(obj, (val, key, obj) => [iteratee(val, key, obj), val], acc);
 };
 
 

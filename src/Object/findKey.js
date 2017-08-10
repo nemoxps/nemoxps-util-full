@@ -6,7 +6,8 @@
  * @returns {string} The found key.
  */
 let findKey = (obj, iteratee) => {
-    return Object.entries(obj).find(([key, val]) => iteratee(val, key, obj))[0];
+    let found = Object.entries(obj).find(([key, val]) => iteratee(val, key, obj));
+    return (found !== undefined) ? found[0] : found;
 };
 
 

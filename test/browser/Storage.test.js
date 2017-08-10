@@ -24,6 +24,7 @@ test('Storage', (t) => {
     t.equal([window.localStorage, window.sessionStorage].includes(new Storage('x', '').storage), false);
     
     storage = new Storage('test-key', {
+        type: 'sessionStorage',
         serialize(value) {
             return `:::${value}:::`;
         },
@@ -31,6 +32,7 @@ test('Storage', (t) => {
             return value.slice(3, -3);
         },
     });
+    t.equal(storage.storage, window.sessionStorage);
     storage.set('test-value');
     t.equal(storage.storage.getItem(storage.key), ':::test-value:::');
     t.equal(storage.get(), 'test-value');

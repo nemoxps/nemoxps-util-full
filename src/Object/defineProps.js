@@ -37,4 +37,5 @@ let defineProps = (obj, properties) => {
 };
 
 
-module.exports = { defineProps, c, e, w, g, s, gs };
+module.exports = defineProps;
+module.exports.flags = { c, e, w, g, s, gs };

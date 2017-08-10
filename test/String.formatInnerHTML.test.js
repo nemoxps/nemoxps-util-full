@@ -4,22 +4,30 @@ let formatInnerHTML = require('../src/String/formatInnerHTML');
 
 
 test('String.formatInnerHTML', (t) => {
-    t.equal(formatInnerHTML`
-        <div class="myClass">
-          Some content.
-        </div>
-    `, `
+    let cutTemplateString = (str) => str.replace(/^\n|\n *$/g, '');
+    
+    t.equal(
+        formatInnerHTML`
+            <div class="myClass">
+              Some content.
+            </div>
+        `,
+        cutTemplateString(`
 
   <div class="myClass">
     Some content.
   </div>
 
-    `.replace(/^\n|\n *$/g, ''));
-    t.equal(formatInnerHTML`
-        <div class="myClass">
-          ${['Some', 'content', 'in', 'lines']}.
-        </div>
-    `, `
+        `)
+    );
+    
+    t.equal(
+        formatInnerHTML`
+            <div class="myClass">
+              ${['Some', 'content', 'in', 'lines']}.
+            </div>
+        `,
+        cutTemplateString(`
 
   <div class="myClass">
     Some
@@ -28,7 +36,8 @@ test('String.formatInnerHTML', (t) => {
     lines.
   </div>
 
-    `.replace(/^\n|\n *?$/g, ''));
+        `)
+    );
     
     t.end();
 });

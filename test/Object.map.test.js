@@ -4,12 +4,18 @@ let map = require('../src/Object/map');
 
 
 test('Object.map', (t) => {
-    let obj = { abc: 'abc', acb: 'acb', bac: 'bac', bca: 'bca', cab: 'cab', cba: 'cba' };
+    let obj = { abc: 'xyz', acb: 'xzy', bac: 'yxz', bca: 'yzx', cab: 'zxy', cba: 'zyx' };
     
     t.deepEqual(
-        map(obj, (val, key) => [key + 'x', '_' + val]),
-        { abcx: '_abc', acbx: '_acb', bacx: '_bac', bcax: '_bca', cabx: '_cab', cbax: '_cba' }
+        map(obj, (val, key) => ['_' + key, val + '_']),
+        { _abc: 'xyz_', _acb: 'xzy_', _bac: 'yxz_', _bca: 'yzx_', _cab: 'zxy_', _cba: 'zyx_' }
     );
+    
+    t.deepEqual(
+        map(obj, (val, key) => ['_' + key, val + '_'], Object.create(null)),
+        { _abc: 'xyz_', _acb: 'xzy_', _bac: 'yxz_', _bca: 'yzx_', _cab: 'zxy_', _cba: 'zyx_' }
+    );
+    t.equal(Object.getPrototypeOf(map(obj, (val, key) => [key, val], Object.create(null))), null);
     
     t.end();
 });

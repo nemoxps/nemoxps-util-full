@@ -6,10 +6,11 @@ let fromEntries = require('./fromEntries');
  *
  * @param {Object} obj An object.
  * @param {function} iteratee A function that is called for each element.
+ * @param {Object} [acc] An accumulator.
  * @returns {Object} The filtered object.
  */
-let filter = (obj, iteratee) => {
-    return fromEntries(Object.entries(obj).filter(([key, val]) => iteratee(val, key, obj)));
+let filter = (obj, iteratee, acc) => {
+    return fromEntries(Object.entries(obj).filter(([key, val]) => iteratee(val, key, obj)), acc);
 };
 
 

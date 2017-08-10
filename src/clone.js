@@ -25,7 +25,7 @@ let clone = (o) => {
       
       case 'Object':
         return Object.entries(Object.getOwnPropertyDescriptors(o)).reduce((r, [key, descriptor]) => {
-            if ('value' in descriptor)
+            if (Object.hasOwnProperty.call(descriptor, 'value'))
               descriptor.value = clone(descriptor.value);
             return Object.defineProperty(r, key, descriptor);
         }, Object.create(Object.getPrototypeOf(o)));

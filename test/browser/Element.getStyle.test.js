@@ -3,7 +3,7 @@ let test = require('tape');
 let getStyle = require('../../src/browser/Element/getStyle');
 
 
-test('Element.getStyle', (t) => {
+test('Element#getStyle', (t) => {
     let fixture = document.createElement('div');
     fixture.classList.add('test-getStyle');
     document.body.appendChild(fixture);

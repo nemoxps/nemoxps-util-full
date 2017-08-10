@@ -11,7 +11,8 @@ let nth = (arr, n) => {
     if (!l)
       return;
     
-    n += (n < 0) ? l : 0;
+    if (n < 0)
+      n += l;
     return arr[n];
 };
 

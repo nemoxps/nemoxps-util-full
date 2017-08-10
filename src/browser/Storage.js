@@ -1,4 +1,4 @@
-let { defineProps } = require('../Object/defineProps');
+let defineProps = require('../Object/defineProps');
 
 
 let inMemoryStorage = new class InMemoryStorage {

@@ -3,7 +3,7 @@ let test = require('tape');
 let childIndex = require('../../src/browser/Element/childIndex');
 
 
-test('Element.childIndex', (t) => {
+test('Element#childIndex', (t) => {
     let fixture = document.createElement('div');
     fixture.innerHTML = `
         <span></span>

@@ -3,7 +3,7 @@ let test = require('tape');
 let matchAll = require('../src/String/matchAll');
 
 
-test('String.matchAll', (t) => {
+test('String#matchAll', (t) => {
     let str = 'test-1 test-2 test-3';
     let matches = [
         ['test-1', '1'],

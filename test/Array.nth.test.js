@@ -3,7 +3,7 @@ let test = require('tape');
 let nth = require('../src/Array/nth');
 
 
-test('Array.nth', (t) => {
+test('Array#nth', (t) => {
     let arr = [1, 2, 3, 4];
     let l = arr.length;
     

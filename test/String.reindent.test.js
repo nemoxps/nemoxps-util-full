@@ -3,28 +3,30 @@ let test = require('tape');
 let reindent = require('../src/String/reindent');
 
 
-test('String.reindent', (t) => {
-    let str = `
+test('String#reindent', (t) => {
+    let cutTemplateString = (str) => str.replace(/^\n|\n *$/g, '');
+    
+    let str = cutTemplateString(`
         The quick brown fox
         
           jumps over the lazy dog.
-    `.replace(/^\n|\n *$/g, '');
+    `);
     
-    t.equal(reindent(str), `
+    t.equal(reindent(str), cutTemplateString(`
 The quick brown fox
 
   jumps over the lazy dog.
-    `.replace(/^\n|\n *$/g, ''));
-    t.equal(reindent(str, 4), `
+    `));
+    t.equal(reindent(str, 4), cutTemplateString(`
     The quick brown fox
 
       jumps over the lazy dog.
-    `.replace(/^\n|\n *$/g, ''));
-    t.equal(reindent(str, 2, '\t'), `
+    `));
+    t.equal(reindent(str, 2, '\t'), cutTemplateString(`
 \t\tThe quick brown fox
 
 \t\t  jumps over the lazy dog.
-    `.replace(/^\n|\n *$/g, ''));
+    `));
     
     t.end();
 });

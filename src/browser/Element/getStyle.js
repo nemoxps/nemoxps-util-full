@@ -21,7 +21,7 @@ let getStyle = (elem, prop, removeUnit = true) => {
       return ['width', 'style', 'color', 'radius'].reduce((r, shorthand) => Object.assign(r, { [shorthand]: getStyle(elem, [prop, shorthand].join('-'), removeUnit) }), {});
     
     let value = document.defaultView.getComputedStyle(elem).getPropertyValue(prop);
-    if (removeUnit)
+    if (removeUnit && typeof value === 'string')
       value = value.replace(/px$/, '');
     if (value !== '' && !Number.isNaN(Number(value)))
       value = Number(value);

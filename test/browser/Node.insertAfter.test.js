@@ -3,7 +3,7 @@ let test = require('tape');
 let insertAfter = require('../../src/browser/Node/insertAfter');
 
 
-test('Node.insertAfter', (t) => {
+test('Node#insertAfter', (t) => {
     let fixture = document.createElement('div');
     fixture.innerHTML = `
         <span></span>

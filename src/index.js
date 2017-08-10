@@ -5,16 +5,19 @@ let api = {
     type: require('./type'),
     
     Array: {
+        flatten: require('./Array/flatten'),
         insertBetween: require('./Array/insertBetween'),
         nth: require('./Array/nth'),
         pull: require('./Array/pull'),
         remove: require('./Array/remove'),
         shuffle: require('./Array/shuffle'),
+        unique: require('./Array/unique'),
     },
     
     Map: {
-        filterKeys: require('./Map/filterKeys'),
-        filterValues: require('./Map/filterValues'),
+        entries: require('./Map/entries'),
+        keys: require('./Map/keys'),
+        values: require('./Map/values'),
     },
     
     Math: {
@@ -36,10 +39,12 @@ let api = {
         findKey: require('./Object/findKey'),
         fromEntries: require('./Object/fromEntries'),
         isObject: require('./Object/isObject'),
+        isPlainObject: require('./Object/isPlainObject'),
         map: require('./Object/map'),
         mapKeys: require('./Object/mapKeys'),
         mapValues: require('./Object/mapValues'),
         pick: require('./Object/pick'),
+        pickNot: require('./Object/pickNot'),
         reduce: require('./Object/reduce'),
         some: require('./Object/some'),
         toMapObj: require('./Object/toMapObj'),

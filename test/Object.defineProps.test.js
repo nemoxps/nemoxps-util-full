@@ -1,6 +1,7 @@
 let test = require('tape');
 
-let { defineProps, c, e, w, g, s, gs } = require('../src/Object/defineProps');
+let defineProps = require('../src/Object/defineProps');
+let { c, e, w, g, s, gs } = defineProps.flags;
 
 
 test('Object.defineProps', (t) => {
@@ -15,6 +16,7 @@ test('Object.defineProps', (t) => {
     };
     let toComparable = (obj) => replaceFunctions(Object.getOwnPropertyDescriptors(obj));
     
+    /* eslint-disable getter-return */
     t.deepEqual(
         toComparable(defineProps({}, {
             key1: ['val1'],
@@ -87,6 +89,7 @@ test('Object.defineProps', (t) => {
             key9: { get() {}, enumerable: true, configurable: true },
         }))
     );
+    /* eslint-enable getter-return */
     
     t.end();
 });

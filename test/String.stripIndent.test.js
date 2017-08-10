@@ -3,18 +3,20 @@ let test = require('tape');
 let stripIndent = require('../src/String/stripIndent');
 
 
-test('String.stripIndent', (t) => {
+test('String#stripIndent', (t) => {
+    let cutTemplateString = (str) => str.replace(/^\n|\n *$/g, '');
+    
     t.equal(
-        stripIndent(`
+        stripIndent(cutTemplateString(`
             The quick brown fox
             
               jumps over the lazy dog.
-        `.replace(/^\n|\n *$/g, '')),
-        `
+        `)),
+        cutTemplateString(`
 The quick brown fox
 
   jumps over the lazy dog.
-        `.replace(/^\n|\n *$/g, '')
+        `)
     );
     
     t.end();
