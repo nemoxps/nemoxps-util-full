@@ -3,16 +3,23 @@ let test = require('tape');
 let pick = require('../src/Object/pick');
 
 
-test('Object.pick', (t) => {
+test('Object#pick', (t) => {
+    let fn = pick;
+    let tt = (args, expected, msg) => {
+        t.deepEqual(fn(...args), expected, msg);
+    };
+    tt.acc = (args, expected, expected2, msg) => {
+        tt(args, expected, msg);
+        t.equal(Object.getPrototypeOf(fn(...args)), expected2, msg);
+    };
+    
     let obj = { abc: 'xyz', acb: 'xzy', bac: 'yxz', bca: 'yzx', cab: 'zxy', cba: 'zyx' };
     
-    t.deepEqual(pick(obj, 'abc'), { abc: 'xyz' });
-    t.deepEqual(pick(obj, 'abc', 'acb'), { abc: 'xyz', acb: 'xzy' });
+    tt([obj, 'abc'], { abc: 'xyz' });
+    tt([obj, 'abc', 'acb'], { abc: 'xyz', acb: 'xzy' });
     
-    t.deepEqual(pick(obj, 'abc', Object.create(null)), { abc: 'xyz' });
-    t.deepEqual(pick(obj, 'abc', 'acb', Object.create(null)), { abc: 'xyz', acb: 'xzy' });
-    t.equal(Object.getPrototypeOf(pick(obj, 'abc', Object.create(null))), null);
-    t.equal(Object.getPrototypeOf(pick(obj, 'abc', 'acb', Object.create(null))), null);
+    tt.acc([obj, 'abc', Object.create(null)], { abc: 'xyz' }, null);
+    tt.acc([obj, 'abc', 'acb', Object.create(null)], { abc: 'xyz', acb: 'xzy' }, null);
     
     t.end();
 });

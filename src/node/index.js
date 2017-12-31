@@ -1,13 +1,14 @@
-/* eslint-disable global-require */
 let api = require('../');
 
 
 let nodeApi = Object.assign({}, api, {
-    fsp: require('fsp'),
-    
-    doesPathBreakOut: require('./doesPathBreakOut'),
-    exists: require('./exists'),
+    fsp: Object.assign(require('./fsp/fsp'), {
+        exists: require('./fsp/exists'),
+    }),
+    path: {
+        doesPathBreakOut: require('./path/doesPathBreakOut'),
+    },
 });
 
 
-module.exports = api.Object.toMapObj(nodeApi, true);
+module.exports = nodeApi;

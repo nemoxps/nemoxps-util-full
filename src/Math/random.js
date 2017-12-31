@@ -1,9 +1,9 @@
 /**
  * Gets a random number in an arbitrary range.
  *
- * @param {number} [min=0] A lower bound.
- * @param {number} max An upper bound.
- * @returns {number} A random number (integer).
+ * @param {int} [min=0] A lower bound. (Optional)
+ * @param {int} max An upper bound.
+ * @returns {int} A random number.
  */
 let random = function (min, max) {
     if (arguments.length === 1)

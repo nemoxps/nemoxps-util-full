@@ -4,90 +4,55 @@ let defineProps = require('../src/Object/defineProps');
 let { c, e, w, g, s, gs } = defineProps.flags;
 
 
-test('Object.defineProps', (t) => {
-    let replaceFunctions = (propertyDescriptors) => {
-        return Object.entries(propertyDescriptors).map(([key, descriptor]) => {
-            if ('get' in descriptor && descriptor.get)
-              descriptor.get = true;
-            if ('set' in descriptor && descriptor.set)
-              descriptor.set = true;
-            return [key, descriptor];
-        }).reduce((r, [key, descriptor]) => Object.assign(r, { [key]: descriptor }), {});
+test('Object#defineProps', (t) => {
+    let fn = defineProps;
+    let toComparable = (obj) => Object.entries(Object.getOwnPropertyDescriptors(obj)).map(([key, descriptor]) => {
+        if ('get' in descriptor && descriptor.get)
+          descriptor.get = true;
+        if ('set' in descriptor && descriptor.set)
+          descriptor.set = true;
+        return [key, descriptor];
+    }).reduce((r, [key, descriptor]) => Object.assign(r, { [key]: descriptor }), {});
+    let tt = (arg, expected, msg) => {
+        t.deepEqual(toComparable(fn({}, arg)), toComparable(Object.defineProperties({}, expected)), msg);
     };
-    let toComparable = (obj) => replaceFunctions(Object.getOwnPropertyDescriptors(obj));
     
     /* eslint-disable getter-return */
-    t.deepEqual(
-        toComparable(defineProps({}, {
-            key1: ['val1'],
-        })),
-        toComparable(Object.defineProperties({}, {
-            key1: { value: 'val1' },
-        }))
+    tt(
+        { key1: ['val1'] },
+        { key1: { value: 'val1' } }
     );
-    t.deepEqual(
-        toComparable(defineProps({}, {
-            key2: ['val2', c],
-        })),
-        toComparable(Object.defineProperties({}, {
-            key2: { value: 'val2', configurable: true },
-        }))
+    tt(
+        { key2: ['val2', c] },
+        { key2: { value: 'val2', configurable: true } }
     );
-    t.deepEqual(
-        toComparable(defineProps({}, {
-            key3: ['val3', e],
-        })),
-        toComparable(Object.defineProperties({}, {
-            key3: { value: 'val3', enumerable: true },
-        }))
+    tt(
+        { key3: ['val3', e] },
+        { key3: { value: 'val3', enumerable: true } }
     );
-    t.deepEqual(
-        toComparable(defineProps({}, {
-            key4: ['val4', w],
-        })),
-        toComparable(Object.defineProperties({}, {
-            key4: { value: 'val4', writable: true },
-        }))
+    tt(
+        { key4: ['val4', w] },
+        { key4: { value: 'val4', writable: true } }
     );
-    t.deepEqual(
-        toComparable(defineProps({}, {
-            key5: [() => {}, g],
-        })),
-        toComparable(Object.defineProperties({}, {
-            key5: { get() {} },
-        }))
+    tt(
+        { key5: [() => {}, g] },
+        { key5: { get() {} } }
     );
-    t.deepEqual(
-        toComparable(defineProps({}, {
-            key6: [() => {}, s],
-        })),
-        toComparable(Object.defineProperties({}, {
-            key6: { set() {} },
-        }))
+    tt(
+        { key6: [() => {}, s] },
+        { key6: { set() {} } }
     );
-    t.deepEqual(
-        toComparable(defineProps({}, {
-            key7: [[() => {}, () => {}], gs],
-        })),
-        toComparable(Object.defineProperties({}, {
-            key7: { get() {}, set() {} },
-        }))
+    tt(
+        { key7: [[() => {}, () => {}], gs] },
+        { key7: { get() {}, set() {} } }
     );
-    t.deepEqual(
-        toComparable(defineProps({}, {
-            key8: ['val8', e | w],
-        })),
-        toComparable(Object.defineProperties({}, {
-            key8: { value: 'val8', enumerable: true, writable: true },
-        }))
+    tt(
+        { key8: ['val8', e | w] },
+        { key8: { value: 'val8', enumerable: true, writable: true } }
     );
-    t.deepEqual(
-        toComparable(defineProps({}, {
-            key9: [() => {}, g | e | c],
-        })),
-        toComparable(Object.defineProperties({}, {
-            key9: { get() {}, enumerable: true, configurable: true },
-        }))
+    tt(
+        { key9: [() => {}, g | e | c] },
+        { key9: { get() {}, enumerable: true, configurable: true } }
     );
     /* eslint-enable getter-return */
     

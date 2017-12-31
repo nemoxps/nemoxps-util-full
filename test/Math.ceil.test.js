@@ -4,11 +4,21 @@ let ceil = require('../src/Math/ceil');
 
 
 test('Math.ceil', (t) => {
-    t.equal(ceil(55.55), Math.ceil(55.55));
-    t.equal(ceil(51, 1), 60);
-    t.equal(ceil(55.51, -1), 55.6);
-    t.equal(ceil(-59, 1), -50);
-    t.equal(ceil(-55.59, -1), -55.5);
+    let fn = ceil;
+    let tt = (args, expected, msg) => {
+        t.equal(fn(...args), expected, msg);
+    };
+    tt.default = (args, defaultArgs, msg) => {
+        t.equal(fn(...args), fn(...defaultArgs), msg);
+    };
+    
+    tt.default([55.55], [55.55, 0]);
+    
+    tt([55.55, 0], Math.ceil(55.55));
+    tt([51, 1], 60);
+    tt([55.51, -1], 55.6);
+    tt([-59, 1], -50);
+    tt([-55.59, -1], -55.5);
     
     t.end();
 });

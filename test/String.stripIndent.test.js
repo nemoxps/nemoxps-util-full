@@ -4,19 +4,23 @@ let stripIndent = require('../src/String/stripIndent');
 
 
 test('String#stripIndent', (t) => {
-    let cutTemplateString = (str) => str.replace(/^\n|\n *$/g, '');
+    let fn = stripIndent;
+    let trimTemplateString = (str) => str.replace(/^\n|\n *$/g, '');
+    let tt = (arg, expected, msg) => {
+        t.equal(fn(trimTemplateString(arg)), trimTemplateString(expected), msg);
+    };
     
-    t.equal(
-        stripIndent(cutTemplateString(`
+    tt(
+        `
             The quick brown fox
             
               jumps over the lazy dog.
-        `)),
-        cutTemplateString(`
+        `,
+        `
 The quick brown fox
 
   jumps over the lazy dog.
-        `)
+        `
     );
     
     t.end();

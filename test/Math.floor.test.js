@@ -4,11 +4,21 @@ let floor = require('../src/Math/floor');
 
 
 test('Math.floor', (t) => {
-    t.equal(floor(55.55), Math.floor(55.55));
-    t.equal(floor(59, 1), 50);
-    t.equal(floor(55.59, -1), 55.5);
-    t.equal(floor(-51, 1), -60);
-    t.equal(floor(-55.51, -1), -55.6);
+    let fn = floor;
+    let tt = (args, expected, msg) => {
+        t.equal(fn(...args), expected, msg);
+    };
+    tt.default = (args, defaultArgs, msg) => {
+        t.equal(fn(...args), fn(...defaultArgs), msg);
+    };
+    
+    tt.default([55.55], [55.55, 0]);
+    
+    tt([55.55, 0], Math.floor(55.55));
+    tt([59, 1], 50);
+    tt([55.59, -1], 55.5);
+    tt([-51, 1], -60);
+    tt([-55.51, -1], -55.6);
     
     t.end();
 });

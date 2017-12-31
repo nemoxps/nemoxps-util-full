@@ -4,48 +4,49 @@ let type = require('../src/type');
 
 
 test('type', (t) => {
-    /* eslint-disable no-new-wrappers,prefer-arrow-callback,no-empty-function,no-new-func,no-array-constructor,no-new-object,symbol-description */
-    t.equal(type(''), 'string');
-    t.equal(type(new String('')), 'String');
+    let fn = type;
+    let tt = (arg, expected, msg) => {
+        t.equal(fn(arg), expected, msg);
+    };
     
-    t.equal(type(0), 'number');
-    t.equal(type(new Number(0)), 'Number');
-    t.equal(type(NaN), 'NaN');
+    /* eslint-disable no-new-wrappers,prefer-arrow-callback,no-empty-function,symbol-description */
+    tt('', 'string');
+    tt(new String(''), 'String');
     
-    t.equal(type(true), 'boolean');
-    t.equal(type(new Boolean(true)), 'Boolean');
+    tt(0, 'number');
+    tt(new Number(0), 'Number');
+    tt(NaN, 'NaN');
     
-    t.equal(type(undefined), 'undefined');
-    t.equal(type(null), 'null');
-    t.equal(type(Symbol()), 'symbol');
+    tt(true, 'boolean');
+    tt(new Boolean(true), 'Boolean');
     
-    t.equal(type(function () {}), 'function');
-    t.equal(type(() => {}), 'function');
-    t.equal(type(function* () {}), 'function');
-    t.equal(type(new Function()), 'function');
+    tt(undefined, 'undefined');
+    tt(null, 'null');
+    tt(Symbol(), 'symbol');
     
-    t.equal(type([]), 'Array');
-    t.equal(type(new Array()), 'Array');
+    tt(function () {}, 'function');
+    tt(function* () {}, 'function');
+    tt(() => {}, 'function');
     
-    t.equal(type({}), 'Object');
-    t.equal(type(new Object()), 'Object');
-    t.equal(type(Object.create(null)), 'Object');
+    tt([], 'Array');
     
-    t.equal(type(/x/), 'RegExp');
-    t.equal(type(new RegExp('x')), 'RegExp');
+    tt({}, 'Object');
+    tt(Object.create(null), 'Object');
     
-    t.equal(type(new Date()), 'Date');
+    tt(/x/, 'RegExp');
     
-    t.equal(type(new Set()), 'Set');
-    t.equal(type(new WeakSet()), 'WeakSet');
+    tt(new Date(), 'Date');
     
-    t.equal(type(new Map()), 'Map');
-    t.equal(type(new WeakMap()), 'WeakMap');
+    tt(new Set(), 'Set');
+    tt(new WeakSet(), 'WeakSet');
+    
+    tt(new Map(), 'Map');
+    tt(new WeakMap(), 'WeakMap');
     
     let c = class {};
     c.prototype[Symbol.toStringTag] = 'myClassType';
-    t.equal(type(new c()), c.prototype[Symbol.toStringTag]);
-    /* eslint-enable no-new-wrappers,prefer-arrow-callback,no-empty-function,no-new-func,no-array-constructor,no-new-object,symbol-description */
+    tt(new c(), c.prototype[Symbol.toStringTag]);
+    /* eslint-enable no-new-wrappers,prefer-arrow-callback,no-empty-function,symbol-description */
     
     t.end();
 });

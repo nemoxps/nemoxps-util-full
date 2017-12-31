@@ -2,7 +2,7 @@ let regexpspecialchars = require('./regexpspecialchars');
 
 
 /**
- * Prepares a string so it can be used as a template.
+ * Turns a string into a template.
  *
  * @param {string} str A string.
  * @param {(string|string[])} [delimiters=['{{','}}']]

@@ -13,11 +13,11 @@ let insertBetween = require('../../Array/insertBetween');
 let getStyle = (elem, prop, removeUnit = true) => {
     if (['padding', 'margin'].includes(prop))
       return ['top', 'right', 'bottom', 'left'].map((loc) => getStyle(elem, [prop, loc].join('-'), removeUnit));
-    else if (['border-width', 'border-style', 'border-color'].includes(prop))
+    if (['border-width', 'border-style', 'border-color'].includes(prop))
       return ['top', 'right', 'bottom', 'left'].map((loc) => getStyle(elem, insertBetween(prop.split('-'), loc).join('-'), removeUnit));
-    else if (prop === 'border-radius')
+    if (prop === 'border-radius')
       return ['top-left', 'top-right', 'bottom-right', 'bottom-left'].map((loc) => getStyle(elem, insertBetween(prop.split('-'), loc).join('-'), removeUnit));
-    else if (prop === 'border')
+    if (prop === 'border')
       return ['width', 'style', 'color', 'radius'].reduce((r, shorthand) => Object.assign(r, { [shorthand]: getStyle(elem, [prop, shorthand].join('-'), removeUnit) }), {});
     
     let value = document.defaultView.getComputedStyle(elem).getPropertyValue(prop);

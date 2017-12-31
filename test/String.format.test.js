@@ -4,49 +4,54 @@ let format = require('../src/String/format');
 
 
 test('String.format', (t) => {
-    let cutTemplateString = (str) => str.replace(/^\n|\n *$/g, '');
+    let fn = format;
+    let trimTemplateString = (str) => str.replace(/^\n|\n *$/g, '');
+    let tt = (args, expected, msg) => {
+        t.equal(fn(...args), trimTemplateString(expected), msg);
+    };
+    let catchTemplateArgs = (...args) => args;
     
-    t.equal(
-        format`
+    tt(
+        catchTemplateArgs`
             The quick brown fox
             
               jumps over the lazy dog.
         `,
-        cutTemplateString(`
+        `
 The quick brown fox
 
   jumps over the lazy dog.
-        `)
+        `
     );
     
-    t.equal(
-        format`
+    tt(
+        catchTemplateArgs`
             The ${['quick', 'brown', 'fox']}
             jumps over the
             ${['lazy', 'dog']}.
         `,
-        cutTemplateString(`
+        `
 The quick, brown, fox
 jumps over the
 lazy
 dog.
-        `)
+        `
     );
     
-    t.equal(
-        format`
+    tt(
+        catchTemplateArgs`
             ${'The'} quick brown fox
             jumps over
               ${['the', 'lazy']}
             ${'dog'}.
         `,
-        cutTemplateString(`
+        `
 The quick brown fox
 jumps over
   the
   lazy
 dog.
-        `)
+        `
     );
     
     t.end();

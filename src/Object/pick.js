@@ -1,4 +1,4 @@
-let nth = require('../Array/nth');
+let at = require('../Array/at');
 let filter = require('./filter');
 
 
@@ -12,8 +12,8 @@ let filter = require('./filter');
  */
 let pick = (obj, ...keys/* , acc */) => {
     let acc;
-    if (typeof nth(keys, -1) !== 'string')
-      [keys, acc] = [keys.slice(0, -1), nth(keys, -1)];
+    if (typeof at(keys, -1) !== 'string')
+      [keys, acc] = [keys.slice(0, -1), at(keys, -1)];
     
     return filter(obj, (val, key) => keys.includes(key), acc);
 };

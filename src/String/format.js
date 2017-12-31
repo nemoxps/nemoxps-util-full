@@ -1,4 +1,4 @@
-let nth = require('../Array/nth');
+let at = require('../Array/at');
 
 
 /**
@@ -7,12 +7,12 @@ let nth = require('../Array/nth');
  *
  * @param {string[]} literals_ (Template Literal String)
  * @param {...*} substitutions (Template Literal String)
- * @returns {string} The trimmed template literal string.
+ * @returns {string} The formatted template literal string.
  */
 let format = (literals_, ...substitutions) => {
     let literals = Array.from(literals_);
     literals[0] = literals[0].split('\n').slice(1).join('\n');
-    literals[literals.length - 1] = nth(literals, -1).split('\n').slice(0, -1).join('\n');
+    literals[literals.length - 1] = at(literals, -1).split('\n').slice(0, -1).join('\n');
     
     let rIndentation = /^[ \t]*/;
     let baseIndentation = literals[0].split('\n')[0].match(rIndentation)[0];
@@ -28,7 +28,7 @@ let format = (literals_, ...substitutions) => {
       if ((Array.isArray(substitution)))
       {
         let lines = lit.split('\n');
-        let lastLine = nth(lines, -1);
+        let lastLine = at(lines, -1);
         let indentation = lastLine.match(rIndentation)[0];
         if (indentation === lastLine)
         {
@@ -44,7 +44,7 @@ let format = (literals_, ...substitutions) => {
       
       str += lit + sub;
     }
-    str += trimIndentation(nth(literals, -1));
+    str += trimIndentation(at(literals, -1));
     
     return str;
 };

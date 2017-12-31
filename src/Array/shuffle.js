@@ -1,21 +1,21 @@
 /**
  * Shuffles the values of an array.
- * Mutates the original array.
  *
  * @param {Array} arr An array.
- * @returns {Array} The original array.
+ * @returns {Array} The shuffled array.
  */
 let shuffle = (arr) => {
+    arr = arr.slice();
+    
     let l = arr.length;
     if (l < 2)
       return arr;
     
-    do
+    while (l)
     {
-      let random = Math.floor(Math.random() * l);
-      [arr[random], arr[l]] = [arr[--l], arr[random]];
+      let random = Math.floor(Math.random() * l--);
+      [arr[l], arr[random]] = [arr[random], arr[l]];
     }
-    while (l > 0);
     
     return arr;
 };

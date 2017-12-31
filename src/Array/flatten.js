@@ -2,8 +2,8 @@
  * Flattens an array to an arbitrary depth.
  *
  * @param {Array} arr An array.
- * @param {(number|boolean)} [depth=1]
- *        {number} A depth.
+ * @param {(int|boolean)} [depth=1]
+ *        {int} A depth.
  *        {boolean} `true` equals `Infinity`, `false` equals `0`.
  * @returns {Array} The flattened array.
  * @throws {Error} Array#flatten: `depth` can't be less than `0`.

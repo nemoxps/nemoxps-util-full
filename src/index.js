@@ -1,23 +1,42 @@
-/* eslint-disable global-require */
 let api = {
     clone: require('./clone'),
     flagGenerator: require('./flagGenerator'),
     type: require('./type'),
     
     Array: {
+        at: require('./Array/at'),
+        chunk: require('./Array/chunk'),
+        filterIndex: require('./Array/filterIndex'),
         flatten: require('./Array/flatten'),
         insertBetween: require('./Array/insertBetween'),
-        nth: require('./Array/nth'),
+        pick: require('./Array/pick'),
+        pickNot: require('./Array/pickNot'),
         pull: require('./Array/pull'),
         remove: require('./Array/remove'),
         shuffle: require('./Array/shuffle'),
         unique: require('./Array/unique'),
+        zip: require('./Array/zip'),
     },
     
-    Map: {
-        entries: require('./Map/entries'),
-        keys: require('./Map/keys'),
-        values: require('./Map/values'),
+    Date: {
+        add: require('./Date/add'),
+        age: require('./Date/age'),
+        birthdays: require('./Date/birthdays'),
+        daysInMonth: require('./Date/daysInMonth'),
+        format: require('./Date/format'),
+        from: require('./Date/from'),
+        inRange: require('./Date/inRange'),
+        isLeapYear: require('./Date/isLeapYear'),
+        leapDaysBetween: require('./Date/leapDaysBetween'),
+        locales: require('./Date/locales'),
+        parse: require('./Date/parse'),
+        starSigns: require('./Date/starSigns'),
+        toArray: require('./Date/toArray'),
+    },
+    
+    Function: {
+        debounce: require('./Function/debounce'),
+        throttle: require('./Function/throttle'),
     },
     
     Math: {
@@ -47,12 +66,11 @@ let api = {
         pickNot: require('./Object/pickNot'),
         reduce: require('./Object/reduce'),
         some: require('./Object/some'),
-        toMapObj: require('./Object/toMapObj'),
     },
     
     String: {
+        anagrams: require('./String/anagrams'),
         format: require('./String/format'),
-        formatInnerHTML: require('./String/formatInnerHTML'),
         htmlspecialchars: require('./String/htmlspecialchars'),
         indent: require('./String/indent'),
         matchAll: require('./String/matchAll'),
@@ -64,4 +82,4 @@ let api = {
 };
 
 
-module.exports = api.Object.toMapObj(api, true);
+module.exports = api;

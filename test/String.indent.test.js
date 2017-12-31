@@ -4,29 +4,38 @@ let indent = require('../src/String/indent');
 
 
 test('String#indent', (t) => {
-    let cutTemplateString = (str) => str.replace(/^\n|\n *$/g, '');
+    let fn = indent;
+    let trimTemplateString = (str) => str.replace(/^\n|\n *$/g, '');
+    let tt = (args, expected, msg) => {
+        t.equal(fn(...args), trimTemplateString(expected), msg);
+    };
+    tt.default = (args, defaultArgs, msg) => {
+        t.equal(fn(...args), fn(...defaultArgs), msg);
+    };
     
-    let str = cutTemplateString(`
+    let str = trimTemplateString(`
         The quick brown fox
 
         jumps over the lazy dog.
     `);
     
-    t.equal(indent(str), cutTemplateString(`
+    tt.default([str], [str, 1, ' ']);
+    
+    tt([str, 1, ' '], `
          The quick brown fox
 
          jumps over the lazy dog.
-    `));
-    t.equal(indent(str, 4), cutTemplateString(`
+    `);
+    tt([str, 4, ' '], `
             The quick brown fox
 
             jumps over the lazy dog.
-    `));
-    t.equal(indent(str, 2, '\t'), cutTemplateString(`
+    `);
+    tt([str, 2, '\t'], `
 \t\t        The quick brown fox
 
 \t\t        jumps over the lazy dog.
-    `));
+    `);
     
     t.end();
 });

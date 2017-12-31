@@ -4,48 +4,47 @@ let create = require('../../src/browser/Element/create');
 
 
 test('Element.create', (t) => {
-    let elem = create('div');
-    t.equal(elem.tagName.toLowerCase(), 'div');
+    let fn = create;
+    let tt = (args, expected, msg) => {
+        t.equal(fn(...args).tagName.toLowerCase(), expected, msg);
+    };
+    tt.id = (args, [tag, expected], msg) => {
+        tt(args, tag, msg);
+        t.equal(fn(...args).id, expected, msg);
+    };
+    tt.class = (args, [tag, expected], msg) => {
+        tt(args, tag, msg);
+        t.equal(fn(...args).className, expected, msg);
+    };
+    tt.idclass = (args, [tag, id, className], msg) => {
+        tt(args, tag, msg);
+        t.equal(fn(...args).id, id, msg);
+        t.equal(fn(...args).className, className, msg);
+    };
+    tt.text = (args, [tag, expected], msg) => {
+        tt(args, tag, msg);
+        t.equal(fn(...args).textContent, expected, msg);
+    };
     
-    elem = create('div#testID');
-    t.equal(elem.tagName.toLowerCase(), 'div');
-    t.equal(elem.id, 'testID');
+    tt(['span'], 'span');
+    tt.id(['div#testID'], ['div', 'testID']);
+    tt.class(['div.testClass1'], ['div', 'testClass1']);
+    tt.class(['div.testClass1.testClass2'], ['div', 'testClass1 testClass2']);
+    tt.idclass(['div#testID.testClass1'], ['div', 'testID', 'testClass1']);
+    tt.idclass(['div.testClass1#testID'], ['div', 'testID', 'testClass1']);
+    tt.idclass(['div.testClass1#testID.testClass2'], ['div', 'testID', 'testClass1 testClass2']);
+    tt.text(['div', 'textContent'], ['div', 'textContent']);
+    tt.text(['div', 42], ['div', '42']);
     
-    elem = create('div.testClass1');
-    t.equal(elem.tagName.toLowerCase(), 'div');
-    t.equal(elem.className, 'testClass1');
-    
-    elem = create('div.testClass1.testClass2');
-    t.equal(elem.tagName.toLowerCase(), 'div');
-    t.equal(elem.className, 'testClass1 testClass2');
-    
-    elem = create('div#testID.testClass1');
-    t.equal(elem.tagName.toLowerCase(), 'div');
-    t.equal(elem.id, 'testID');
-    t.equal(elem.className, 'testClass1');
-    
-    elem = create('div.testClass1#testID');
-    t.equal(elem.tagName.toLowerCase(), 'div');
-    t.equal(elem.id, 'testID');
-    t.equal(elem.className, 'testClass1');
-    
-    elem = create('div.testClass1#testID.testClass2');
-    t.equal(elem.tagName.toLowerCase(), 'div');
-    t.equal(elem.id, 'testID');
-    t.equal(elem.className, 'testClass1 testClass2');
-    
-    elem = create('div', 'textContent');
-    t.equal(elem.tagName.toLowerCase(), 'div');
-    t.equal(elem.textContent, 'textContent');
-    
-    elem = create('div', 42);
-    t.equal(elem.tagName.toLowerCase(), 'div');
-    t.equal(elem.textContent, '42');
-    
-    elem = create('div', { innerHTML: '<span></span>', style: { lineHeight: 1.5 } });
-    t.equal(elem.tagName.toLowerCase(), 'div');
+    let elem;
+    elem = fn('div', { innerHTML: '<span></span>', style: { lineHeight: 1.5 } });
     t.equal(elem.innerHTML, '<span></span>');
     t.equal(elem.style.lineHeight, '1.5');
+    
+    elem = fn('div', { $events: { click() { this.dataset.clicked = 'true'; } } });
+    t.equal(elem.dataset.clicked, undefined);
+    elem.click();
+    t.equal(elem.dataset.clicked, 'true');
     
     t.end();
 });

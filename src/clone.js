@@ -1,3 +1,4 @@
+let objMapValues = require('./Object/mapValues');
 let type = require('./type');
 
 
@@ -24,20 +25,20 @@ let clone = (o) => {
         return o.map(clone);
       
       case 'Object':
-        return Object.entries(Object.getOwnPropertyDescriptors(o)).reduce((r, [key, descriptor]) => {
-            if (Object.hasOwnProperty.call(descriptor, 'value'))
-              descriptor.value = clone(descriptor.value);
-            return Object.defineProperty(r, key, descriptor);
-        }, Object.create(Object.getPrototypeOf(o)));
+        return Object.create(
+            Object.getPrototypeOf(o),
+            objMapValues(Object.getOwnPropertyDescriptors(o), (descriptor) => {
+                if (Object.hasOwnProperty.call(descriptor, 'value'))
+                  descriptor.value = clone(descriptor.value);
+                return descriptor;
+            })
+        );
       
       case 'RegExp':
         return new RegExp(o);
       
-      case 'Date': {
-        let r = new Date();
-        r.setTime(o.getTime());
-        return r;
-      }
+      case 'Date':
+        return new Date(o);
       
       case 'String':
         return new String(o); // eslint-disable-line no-new-wrappers

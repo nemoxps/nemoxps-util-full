@@ -7,6 +7,7 @@ let flagGenerator = function* () {
     while (true)
       yield (flag <<= 1);
 };
+
 /**
  * Generates flags for a set of flag names.
  *

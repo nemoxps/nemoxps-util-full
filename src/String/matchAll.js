@@ -5,13 +5,17 @@
  * @param {RegExp} reg A RegExp.
  */
 let matchAll = function* (str, reg) {
-    reg = new RegExp(reg.source, 'g' + reg.flags.replace('g', ''));
+    let _lastIndex = reg.lastIndex;
+    reg = new RegExp(reg);
+    reg.lastIndex = _lastIndex;
     
+    let prevIndex = -1;
     while (true)
     {
       let match = reg.exec(str);
-      if (match === null)
+      if (match === null || prevIndex === match.index)
         break;
+      prevIndex = match.index;
       yield match;
     }
 };
