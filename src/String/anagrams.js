@@ -1,3 +1,6 @@
+let swap = require('../Array/swap');
+
+
 /**
  * Creates all anagrams from a string.
  *
@@ -5,15 +8,30 @@
  * @returns {string[]} The anagrams.
  */
 let anagrams = (str) => {
-    let l = str.length;
-    if (!l)
+    let length = str.length;
+    if (!length)
       return [];
-    if (l <= 2)
-      return (l === 1) ? [str] : [str, str[1] + str[0]];
     
-    return str.split('').reduce((r, char, index) => {
-        return r.concat(...anagrams(str.slice(0, index) + str.slice(index + 1)).map((val) => char + val));
-    }, []);
+    let chars = str.split('');
+    let counter = Array(length).fill(0);
+    let anagrams = [str];
+    let i = 0;
+    
+    while (i < length)
+      if (counter[i] < i)
+      {
+        swap(chars, (i % 2 === 1) ? counter[i] : 0, i);
+        anagrams.push(chars.join(''));
+        counter[i]++;
+        i = 0;
+      }
+      else
+      {
+        counter[i] = 0;
+        i++;
+      }
+    
+    return anagrams;
 };
 
 

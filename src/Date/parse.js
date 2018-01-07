@@ -1,14 +1,16 @@
 let regexpspecialchars = require('../String/regexpspecialchars');
+let capitalize = require('../String/capitalize');
 let locales = require('./locales');
 
 
-let token = /Y{2}(?:Y{2})?|Mo|M{1,4}|Do|D{1,2}|d{1,4}|H{1,2}|h{1,2}|m{1,2}|s{1,2}|S{1,3}|Z{1,2}|[Aa]|"[^"]*"|'[^']*'/g;
+let token = /Y{4}|Y{1,2}|Mo|M{1,4}|Do|D{1,2}|d{1,4}|H{1,2}|h{1,2}|m{1,2}|s{1,2}|S{1,3}|Z{1,2}|[Aa]|"[^"]*"|'[^']*'/g;
 
 /*
 |    | Token | Input |
 |---:|---    |---     |
 | Year | YYYY | 1970 1971 ... 2029 2030 |
 |      | YY   | 70 71 ... 29 30 |
+|      | Y    | YYYY / YY |
 | Month | MMMM | January February ... November December |
 |       | MMM  | Jan Feb ... Nov Dec |
 |       | MM   | 01 02 ... 11 12 |
@@ -46,11 +48,15 @@ let parseFlags = (() => {
     let threeDigits = '\\d{3}';
     let fourDigits = '\\d{4}';
     let word = '[^\\s]+';
+    let or = (...exprs) => exprs.join('|');
+    let selectFn = (selectFlag) => (d, $0) => {
+        parseFlags[selectFlag($0)][1](d, $0);
+    };
     let updateKey = (dKey, transform) => (d, $0) => {
         d[dKey] = Number((transform) ? transform($0) : $0);
     };
     let updateKeyWithI18n = (dKey, i18nKey) => (d, $0, i18n) => {
-        let index = i18n[i18nKey].indexOf($0[0].toUpperCase() + $0.slice(1).toLowerCase());
+        let index = i18n[i18nKey].indexOf(capitalize($0));
         if (index !== -1)
           d[dKey] = index;
         else
@@ -63,6 +69,7 @@ let parseFlags = (() => {
         let century = String(now.getFullYear()).slice(0, -2);
         d.year = Number((($0 > 68) ? century - 1 : century) + $0);
     }];
+    parseFlags.Y = [or(fourDigits, twoDigits), selectFn(($0) => ($0.length === 2) ? 'YY' : 'YYYY')];
     parseFlags.MMMM = [word, updateKeyWithI18n('month', 'months')];
     parseFlags.MMM = [word, updateKeyWithI18n('month', 'monthsShort')];
     parseFlags.MM = [twoDigits, updateKey('month', ($0) => $0 - 1)];

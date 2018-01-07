@@ -12,8 +12,8 @@ test('String#anagrams', (t) => {
     tt('', []);
     tt('a', ['a']);
     tt('ab', ['ab', 'ba']);
-    tt('abc', ['abc', 'acb', 'bac', 'bca', 'cab', 'cba']);
-    tt('aaa', ['aaa', 'aaa', 'aaa', 'aaa', 'aaa', 'aaa']);
+    tt('abc', ['abc', 'bac', 'cab', 'acb', 'bca', 'cba']);
+    tt('aba', ['aba', 'baa', 'aab', 'aab', 'baa', 'aba']);
     
     t.end();
 });

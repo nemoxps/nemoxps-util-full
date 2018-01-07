@@ -1,3 +1,6 @@
+let swap = require('./swap');
+
+
 /**
  * Shuffles the values of an array.
  *
@@ -12,10 +15,7 @@ let shuffle = (arr) => {
       return arr;
     
     while (l)
-    {
-      let random = Math.floor(Math.random() * l--);
-      [arr[l], arr[random]] = [arr[random], arr[l]];
-    }
+      swap(arr, Math.floor(Math.random() * l--), l);
     
     return arr;
 };

@@ -2,7 +2,7 @@ let locales = require('./locales');
 let from = require('./from');
 
 
-let token = /Y{2}(?:Y{2})?|Mo|M{1,4}|Do|D{1,2}|d{1,4}|H{1,2}|h{1,2}|m{1,2}|s{1,2}|S{1,3}|Z{1,2}|[Aa]|"[^"]*"|'[^']*'/g;
+let token = /Y{4}|Y{2}|Mo|M{1,4}|Do|D{1,2}|d{1,4}|H{1,2}|h{1,2}|m{1,2}|s{1,2}|S{1,3}|Z{1,2}|[Aa]|"[^"]*"|'[^']*'/g;
 let literal = /\[([^\]]*)\]/g;
 
 /*

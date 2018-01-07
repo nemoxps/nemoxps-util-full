@@ -22,9 +22,9 @@ test('Date.parse', (t) => {
     tt(['20010405'], new Date(2001, 3, 5));
     
     tt(['2001-April-05 Thursday 06:07:08.009 AM', 'YYYY-MMMM-DD dddd HH:mm:ss.SSS A'], new Date(2001, 3, 5, 6, 7, 8, 9));
-    tt(['2001-Apr-05 Thu 06:07:08.009 AM', 'YYYY-MMM-DD ddd hh:mm:ss.SSS A'], new Date(2001, 3, 5, 6, 7, 8, 9));
+    tt(['2001-Apr-05 Thu 06:07:08.009 AM', 'Y-MMM-DD ddd hh:mm:ss.SSS A'], new Date(2001, 3, 5, 6, 7, 8, 9));
     tt(['01-04-05 Th 6:07:08.09 am', 'YY-MM-DD dd H:mm:ss.SS a'], new Date(2001, 3, 5, 6, 7, 8, 90));
-    tt(['01-4-5 4 6:7:8.9 am', 'YY-M-D d h:m:s.S a'], new Date(2001, 3, 5, 6, 7, 8, 900));
+    tt(['01-4-5 4 6:7:8.9 am', 'Y-M-D d h:m:s.S a'], new Date(2001, 3, 5, 6, 7, 8, 900));
     tt(['01-4th-5th', 'YY-Mo-Do'], new Date(2001, 3, 5));
     
     tt(['2001-04-05 06:07:08.009', 'YYYY-MM-DD HH:mm:ss.SSS'], new Date(2001, 3, 5, 6, 7, 8, 9));
@@ -34,8 +34,13 @@ test('Date.parse', (t) => {
     tt(['1 Feb 03 April', 'M MMM MM MMMM'], new Date(year, 3));
     tt(['05.04.2001 06:07:08.009', ['YYYYMMDD', 'MM/DD/YYYY HH:mm:ss.SSS', 'DD.MM.YYYY HH:mm:ss.SSS', 'MM.DD.YYYY HH:mm:ss.SSS']], new Date(2001, 3, 5, 6, 7, 8, 9));
     
+    tt(['april 5, 2001', 'MMMM D, YYYY'], new Date(2001, 3, 5));
+    tt(['apriL 5, 2001', 'MMMM D, YYYY'], new Date(2001, 3, 5));
+    tt(['thursday, April 5, 2001', 'dddd, MMMM D, YYYY'], new Date(2001, 3, 5));
+    tt(['thursdaY, April 5, 2001', 'dddd, MMMM D, YYYY'], new Date(2001, 3, 5));
+    
     tt(['5th April, 6 AM', 'Do MMMM, h A'], new Date(year, 3, 5, 6));
-    tt(['5th April, 6 am', 'Do MMMM, h A'], new Date(year, 3, 5, 6));
+    tt(['5th April, 6 PM', 'Do MMMM, h A'], new Date(year, 3, 5, 18));
     tt(['5th April, 12 AM', 'Do MMMM, h A'], new Date(year, 3, 5, 0));
     tt(['5th April, 12 PM', 'Do MMMM, h A'], new Date(year, 3, 5, 12));
     

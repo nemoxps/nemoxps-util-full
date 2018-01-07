@@ -14,6 +14,7 @@ let api = {
         pull: require('./Array/pull'),
         remove: require('./Array/remove'),
         shuffle: require('./Array/shuffle'),
+        swap: require('./Array/swap'),
         unique: require('./Array/unique'),
         zip: require('./Array/zip'),
     },
@@ -70,6 +71,7 @@ let api = {
     
     String: {
         anagrams: require('./String/anagrams'),
+        capitalize: require('./String/capitalize'),
         format: require('./String/format'),
         htmlspecialchars: require('./String/htmlspecialchars'),
         indent: require('./String/indent'),
