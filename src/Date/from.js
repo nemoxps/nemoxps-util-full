@@ -20,9 +20,7 @@ let from = (date, format) => {
       case Array.isArray(date) && date.length !== 0:
         if (date.every(Number.isInteger))
           return new Date(...(date.length !== 1) ? date : [date[0], 0]);
-        if (date.every((val) => typeof val === 'string'))
-          return from(...date);
-        break;
+        return from(...date);
     }
     return new Date(date);
 };

@@ -16,7 +16,9 @@ test('Date.from', (t) => {
     tt([date], date);
     
     tt(['2001-04-05', 'YYYY-MM-DD'], date);
+    tt(['2001-04-05', ['YYYYMMDD', 'YYYY-MM-DD']], date);
     tt([['2001-04-05', 'YYYY-MM-DD']], date);
+    tt([['2001-04-05', ['YYYYMMDD', 'YYYY-MM-DD']]], date);
     
     let time = Date.now();
     tt([time], new Date(time));

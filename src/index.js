@@ -80,6 +80,7 @@ let api = {
         reindent: require('./String/reindent'),
         stripIndent: require('./String/stripIndent'),
         template: require('./String/template'),
+        trimts: require('./String/trimts'),
     },
 };
 
